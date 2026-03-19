@@ -1,6 +1,26 @@
 package com.project.back_end.services;
 
-public class Service {
+import org.springframework.stereotype.Service;
+
+@Service
+public class AppService {
+
+    // Example: Token validation
+    private final TokenService tokenService;
+
+    // 2. Constructor injection
+    public AppService(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
+
+    // 3. validateToken method
+    public boolean validateToken(String token, String role) {
+        return tokenService.isValidToken(token, role);
+    }
+
+    // 4. validateAdmin, filterDoctor, validateAppointment, validatePatient, validatePatientLogin, filterPatient
+    // Implement other methods as needed
+}
 // 1. **@Service Annotation**
 // The @Service annotation marks this class as a service component in Spring. This allows Spring to automatically detect it through component scanning
 // and manage its lifecycle, enabling it to be injected into controllers or other services using @Autowired or constructor injection.
@@ -63,4 +83,4 @@ public class Service {
 // This flexible method supports patient-specific querying and enhances user experience on the client side.
 
 
-}
+

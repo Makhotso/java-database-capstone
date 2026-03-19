@@ -1,5 +1,75 @@
 <!-- doctorDashboard.html -->
 
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="icon" type="image/png" th:href="@{/assets/images/logo/logo.png}" />
+
+    <title>Doctor Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/doctorDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <!-- JS -->
+    <script th:src="@{/js/render.js}" defer></script>
+    <script th:src="@{/js/util.js}" defer></script>
+    <script th:src="@{/js/header.js}" defer></script>
+    <script th:src="@{/js/footer.js}" defer></script>
+    <script type="module" th:src="@{/js/doctorDashboard.js}" defer></script>
+</head>
+
+<body onload="renderContent()">
+
+<div class="container">
+    <div class="wrapper">
+
+        <!-- Header -->
+        <div id="header"></div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <!-- Search -->
+            <input type="text" id="searchBar" class="searchBar" placeholder="Search patient by name" />
+
+            <!-- Filters -->
+            <div class="filters">
+                <button id="todayButton">Today</button>
+                <input type="date" id="datePicker">
+            </div>
+
+            <!-- Table -->
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Prescription</th>
+                </tr>
+                </thead>
+
+                <tbody id="patientTableBody"></tbody>
+            </table>
+
+        </div>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+    </div>
+</div>
+
+</body>
+</html>
+<!-- doctorDashboard.html -->
+
 <!-- 
 Step-by-Step Explanation of `doctorDashboard.html`
 This file defines the Doctor Dashboard interface, allowing doctors to view and manage their patient appointments, search records, and access patient prescriptions.

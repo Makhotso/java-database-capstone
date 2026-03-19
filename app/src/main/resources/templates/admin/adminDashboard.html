@@ -1,3 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Character Encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" th:href="@{/assets/images/logo/logo.png}" />
+
+    <!-- Page Title -->
+    <title>Admin Dashboard</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <!-- Common JS Files -->
+    <script th:src="@{/js/render.js}" defer></script>
+    <script th:src="@{/js/util.js}" defer></script>
+    <script th:src="@{/js/header.js}" defer></script>
+    <script th:src="@{/js/footer.js}" defer></script>
+</head>
+
+<body onload="renderContent()">
+
+<!-- Container -->
+<div class="container">
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+
+        <!-- Header -->
+        <div id="header"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Search Bar -->
+            <input type="text" id="searchBar" placeholder="Search doctors..." />
+
+            <!-- Filters -->
+            <select id="timeFilter">
+                <option value="">All Times</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>
+
+            <select id="specialtyFilter">
+                <option value="">All Specialties</option>
+                <option value="Cardiology">Cardiology</option>
+                <option value="Dentist">Dentist</option>
+                <option value="Dermatology">Dermatology</option>
+            </select>
+
+            <!-- Dynamic Content -->
+            <div id="content"></div>
+
+        </main>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modal-body"></div>
+    </div>
+</div>
+
+<!-- Page-Specific JS -->
+<script type="module" th:src="@{/js/adminDashboard.js}" defer></script>
+<script type="module" th:src="@{/js/doctorCard.js}" defer></script>
+
+</body>
+
+</html>
 <!-- adminDashboard.html -->
 
 <!-- 
@@ -106,4 +187,5 @@ with search, filter, and modal functionality.
     * Finish the structure by properly closing all tags.
 
  -->
+
 

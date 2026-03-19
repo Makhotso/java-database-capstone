@@ -1,6 +1,80 @@
 package com.project.back_end.services;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+
+@Component
 public class TokenService {
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    // Constructor injection for repositories
+    private final AdminRepository adminRepository;
+    private final DoctorRepository doctorRepository;
+    private final PatientRepository patientRepository;
+
+    public TokenService(AdminRepository adminRepository,
+                        DoctorRepository doctorRepository,
+                        PatientRepository patientRepository) {
+        this.adminRepository = adminRepository;
+        this.doctorRepository = doctorRepository;
+        this.patientRepository = patientRepository;
+    }
+
+    // Generate signing key from secret
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes());
+    }
+
+    // Generate JWT token for a given email
+    public String generateToken(String email) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days
+
+        return Jwts.builder()
+                .setSubject(email)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    // Extract email from JWT token
+    public String extractEmail(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    // Validate token for role
+    public boolean validateToken(String token, String role) {
+        try {
+            String email = extractEmail(token);
+
+            switch (role.toLowerCase()) {
+                case "admin":
+                    return adminRepository.existsByEmail(email);
+                case "doctor":
+                    return doctorRepository.existsByEmail(email);
+                case "patient":
+                    return patientRepository.existsByEmail(email);
+                default:
+                    return false;
+            }
+        } catch (Exception e) {
+            return false; // invalid token or exception
+        }
+    }
+}
 // 1. **@Component Annotation**
 // The @Component annotation marks this class as a Spring component, meaning Spring will manage it as a bean within its application context.
 // This allows the class to be injected into other Spring-managed components (like services or controllers) where it's needed.
@@ -40,4 +114,4 @@ public class TokenService {
 // This ensures secure access control based on the user's role and their existence in the system.
 
 
-}
+
