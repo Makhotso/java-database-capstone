@@ -12,6 +12,9 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     // Find a patient by email or phone number
     Patient findByEmailOrPhone(String email, String phone);
+
+    // Check if patient exists by email
+    boolean existsByEmail(String email);
 }
     // 1. Extend JpaRepository:
 //    - The repository extends JpaRepository<Patient, Long>, which provides basic CRUD functionality.

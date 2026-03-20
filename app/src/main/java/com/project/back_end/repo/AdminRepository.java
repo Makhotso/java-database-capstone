@@ -7,11 +7,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 
-    // Custom query method to find an admin by username
+    // Find admin by username
     Admin findByUsername(String username);
 
-    // Optional: check if admin exists by email
+    // Check if admin exists by email
     boolean existsByEmail(String email);
+
+    // Optional: check if admin exists by username
+    boolean existsByUsername(String username);  //  only if Admin has username field
 }
 
     // 1. Extend JpaRepository:

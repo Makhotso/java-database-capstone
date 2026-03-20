@@ -20,6 +20,9 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
     // Find doctors by specialty (case-insensitive)
     List<Doctor> findBySpecialtyIgnoreCase(String specialty);
+
+    // ADD THIS (required for TokenService)
+    boolean existsByEmail(String email);
 }
    // 1. Extend JpaRepository:
 //    - The repository extends JpaRepository<Doctor, Long>, which gives it basic CRUD functionality.
