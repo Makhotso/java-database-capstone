@@ -28,6 +28,7 @@ public class Doctor {
     @Size(min = 3, max = 100)
     private String name;
 
+
     // 3. 'specialty' field
     @NotNull
     @Size(min = 3, max = 50)

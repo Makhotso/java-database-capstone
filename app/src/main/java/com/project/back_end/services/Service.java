@@ -3,7 +3,7 @@ package com.project.back_end.services;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AppService {
+class AppService {
 
     // Example: Token validation
     private final TokenService tokenService;
@@ -15,7 +15,7 @@ public class AppService {
 
     // 3. validateToken method
     public boolean validateToken(String token, String role) {
-        return tokenService.isValidToken(token, role);
+        return tokenService.validateToken(token, role);
     }
 
     // 4. validateAdmin, filterDoctor, validateAppointment, validatePatient, validatePatientLogin, filterPatient
