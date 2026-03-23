@@ -1,6 +1,57 @@
 package com.project.back_end.services;
 
+import com.project.back_end.models.Prescription;
+import com.project.back_end.repo.PrescriptionRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
 public class PrescriptionService {
+
+    private final PrescriptionRepository prescriptionRepository;
+
+    public PrescriptionService(PrescriptionRepository prescriptionRepository) {
+        this.prescriptionRepository = prescriptionRepository;
+    }
+
+    // Save a prescription
+    @Transactional
+    public boolean savePrescription(Prescription prescription) {
+        try {
+            // Check if prescription already exists for the appointment
+            boolean exists = prescriptionRepository.existsByAppointmentId(prescription.getAppointmentId());
+            if (exists) return false; // Already exists
+
+            prescriptionRepository.save(prescription);
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Error saving prescription
+        }
+    }
+
+    // Get prescription by appointment ID
+    @Transactional(readOnly = true)
+    public Prescription getPrescriptionByAppointmentId(Long appointmentId) {
+        try {
+            List<Prescription> prescriptions = prescriptionRepository.findByAppointmentId(appointmentId);
+            if (prescriptions.isEmpty()) return null;
+            return prescriptions.get(0); // Return first prescription found
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Get all prescriptions (optional utility)
+    @Transactional(readOnly = true)
+    public List<Prescription> getAllPrescriptions() {
+        return prescriptionRepository.findAll();
+    }
+}
     
  // 1. **Add @Service Annotation**:
 //    - The `@Service` annotation marks this class as a Spring service component, allowing Spring's container to manage it.
@@ -31,4 +82,4 @@ public class PrescriptionService {
 //    - Instruction: Ensure that all potential exceptions are handled properly, and meaningful responses are returned to the client.
 
 
-}
+
